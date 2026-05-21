@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArtawastuStudio</title>
+    <meta name="description"
+        content="Portfolio arsitektur premium dan branding profesional Aura Atmadja - Mewujudkan ruang estetik, minimalis, dan fungsional.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        archWhite: '#FBFBFB',
+                        archLightBg: '#F4F4F0', // Beige lembut premium
+                        archDarkBg: '#111111',  // Hitam premium murni
+                        archGray: '#666666',
+                        archGold: '#D4AF37',    // Accent Emas Mewah
+                        archWood: '#8B5A2B'     // Coklat Kayu Hangat
+                    },
+                    fontFamily: {
+                        'playfair': ['"Playfair Display"', 'serif'],
+                        'poppins': ['"Poppins"', 'sans-serif'],
+                        'inter': ['"Inter"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome & AOS Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Swiper.js Slider CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-archWhite text-zinc-900 font-['Inter'] transition-colors duration-500 overflow-x-hidden light">
+
+    <!-- Custom Luxury Cursor -->
+    <div class="custom-cursor hidden md:block"></div>
+    <div class="custom-cursor-dot hidden md:block"></div>
+
+    <!-- Cinematic Loading Screen -->
+    <div id="preloader" class="fixed inset-0 z-[9999] bg-archDarkBg flex flex-col justify-center items-center">
+        <h1
+            class="font-['Playfair'] text-3xl tracking-widest text-archGold mb-2 tracking-[0.3em] uppercase opacity-0 init-text">
+            Artawastu.Studio</h1>
+        <p class="font-['Inter'] text-xs text-zinc-500 tracking-[0.5em] uppercase opacity-0 init-subtext">Architectural
+            Studio</p>
+        <div class="w-24 h-[1px] bg-zinc-800 mt-6 relative overflow-hidden">
+            <div class="absolute top-0 left-0 h-full w-full bg-archGold translate-x-[-100%] animate-loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- Background Canvas Subtle Particles -->
+    <div id="particles-js" class="fixed inset-0 z-0 pointer-events-none opacity-40"></div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-[2px] bg-archGold z-[1000] w-0 transition-all duration-700">
+    </div>
+
+    <!-- Navigation Header -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 transition-all duration-500 border-b border-zinc-200/40 bg-archWhite/80 backdrop-blur-md header-nav">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <a href="#" class="block py-1">
+                <img src="img/logo1.jpeg" alt="Logo" class="h-12 w-auto object-contain max-h-full block">
+            </a>
+            <nav
+                class="hidden md:flex items-center space-x-8 font-['Poppins'] text-xs uppercase tracking-widest font-medium">
+                <a href="#hero" class="nav-link text-zinc-600 hover:text-archGold transition">Home</a>
+                <a href="#about" class="nav-link text-zinc-600 hover:text-archGold transition">About</a>
+                <a href="#projects" class="nav-link text-zinc-600 hover:text-archGold transition">Projects</a>
+                <a href="#services" class="nav-link text-zinc-600 hover:text-archGold transition">Services</a>
+                <a href="#gallery" class="nav-link text-zinc-600 hover:text-archGold transition">Gallery</a>
+                <a href="#awards" class="nav-link text-zinc-600 hover:text-archGold transition">Awards</a>
+                <a href="#contact" class="nav-link text-zinc-600 hover:text-archGold transition">Contact</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4">
+                <button id="theme-toggle" class="text-zinc-600 hover:text-archGold transition text-sm">
+                    <i class="fas fa-moon" id="theme-icon"></i>
+                </button>
+            </div>
+
+            <!-- Mobile UI Trigger -->
+            <div class="flex items-center space-x-4 md:hidden">
+                <button id="mobile-theme-toggle" class="text-zinc-600 text-sm"><i class="fas fa-moon"></i></button>
+                <button id="hamburger" class="text-zinc-900 focus:outline-none"><i
+                        class="fas fa-bars text-xl"></i></button>
+            </div>
+        </div>
+
+        <!-- Mobile Fullscreen Drawer Menu -->
+        <div id="mobile-menu"
+            class="fixed inset-y-0 right-0 w-full sm:w-80 bg-zinc-950 text-white z-50 transform translate-x-full transition-transform duration-500 ease-in-out p-8 flex flex-col justify-between">
+            <div>
+                <div class="flex justify-end mb-12">
+                    <button id="close-menu" class="text-zinc-400 hover:text-white"><i
+                            class="fas fa-times text-2xl"></i></button>
+                </div>
+                <nav class="flex flex-col space-y-6 text-lg font-['Playfair'] tracking-wide">
+                    <a href="#hero" class="mobile-nav-link text-zinc-300 hover:text-archGold">Home</a>
+                    <a href="#about" class="mobile-nav-link text-zinc-300 hover:text-archGold">About Architect</a>
+                    <a href="#projects" class="mobile-nav-link text-zinc-300 hover:text-archGold">Featured Projects</a>
+                    <a href="#services" class="mobile-nav-link text-zinc-300 hover:text-archGold">Services</a>
+                    <a href="#gallery" class="mobile-nav-link text-zinc-300 hover:text-archGold">Architecture
+                        Gallery</a>
+                    <a href="#awards" class="mobile-nav-link text-zinc-300 hover:text-archGold">Awards</a>
+                    <a href="#contact" class="mobile-nav-link text-zinc-300 hover:text-archGold">Contact</a>
+                </nav>
+            </div>
+            <div class="text-xs text-zinc-500 font-['Inter'] tracking-widest">© 2026 Artawastu.Studio</div>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section (Fullscreen Cinematic) -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden z-10 pt-20">
+        <!-- Parallax Background Image -->
+        <div class="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat transform scale-110 motion-safe:transition-transform duration-[3000ms]"
+            id="hero-parallax"
+            style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1920&q=80');">
+            <div class="absolute inset-0 bg-gradient-to-r from-black/50 via-black/20 to-transparent dark:from-black/80">
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10 w-full text-white">
+            <p class="text-xs uppercase tracking-[0.6em] text-archGold mb-4 font-['Poppins'] font-medium"
+                data-aos="fade-down">Premium Architectural Branding</p>
+            <h1 class="text-5xl sm:text-8xl font-light font-['Playfair'] tracking-tight leading-none mb-6"
+                data-aos="fade-right" data-aos-delay="200">
+                Artawastu.Studio
+            </h1>
+            <div class="h-[1px] w-32 bg-archGold mb-6" data-aos="fade-right" data-aos-delay="300"></div>
+            <p class="max-w-xl text-sm sm:text-base font-light text-zinc-200/90 leading-relaxed tracking-wide mb-10 font-['Inter']"
+                data-aos="fade-up" data-aos-delay="400">
+                Membentuk harmoni spasial antara garis struktural modern, material organik, kekayaan fungsionalitas, dan
+                limpahan cahaya alami.
+            </p>
+            <div class="flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="500">
+                <a href="#projects"
+                    class="bg-archGold hover:bg-white text-zinc-950 font-['Poppins'] text-xs uppercase tracking-widest font-medium px-8 py-3.5 transition duration-300 shadow-xl">
+                    View Portfolio
+                </a>
+                <a href="#contact"
+                    class="border border-white/40 hover:border-archGold hover:text-archGold text-white font-['Poppins'] text-xs uppercase tracking-widest font-medium px-8 py-3.5 transition duration-300">
+                    Contact Architect
+                </a>
+            </div>
+        </div>
+        <!-- Scroll Indicator Node -->
+        <div
+            class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center z-10 opacity-70 animate-bounce">
+            <span class="text-[10px] uppercase tracking-[0.3em] text-white font-['Inter'] mb-2">Scroll</span>
+            <div class="w-[1px] h-8 bg-white/50"></div>
+        </div>
+    </section>
+
+    <!-- 2. About Architect Section -->
+    <section id="about" class="py-32 relative z-10 max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-12 gap-16 items-center">
+            <!-- Portrait Image Column -->
+            <div class="lg:col-span-5 relative" data-aos="fade-right">
+                <div class="absolute top-4 left-4 w-full h-full border border-archGold/30 z-0"></div>
+                <img src="img/arta.jpg" alt="Aura Atmadja Portrait"
+                    class="relative z-10 w-full object-cover grayscale contrast-115 shadow-2xl">
+            </div>
+
+            <!-- Content Presentation Column -->
+            <div class="lg:col-span-7 space-y-8" data-aos="fade-left">
+                <div>
+                    <h2
+                        class="text-3xl sm:text-5xl font-['Playfair'] font-light tracking-tight text-zinc-950 section-title">
+                        The Philosophy of Spaces</h2>
+                </div>
+
+                <p class="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed font-light">
+                    ARTAWASTU berasal dari dua kata, yaitu “Arta” yang berarti nilai dan makna, serta “Wastu” yang
+                    berarti bangunan atau arsitektur. Nama ini merepresentasikan sebuah proses mengubah ide dan nilai
+                    menjadi karya arsitektur yang nyata, fungsional, dan bermakna. ARTAWASTU tidak hanya berfokus pada
+                    bentuk bangunan, tetapi juga pada bagaimana sebuah ruang dapat memiliki tujuan, karakter, dan nilai
+                    bagi penggunanya.
+                </p>
+
+                <blockquote
+                    class="border-l-2 border-archGold pl-6 py-2 italic font-['Playfair'] text-lg text-zinc-700 dark:text-zinc-300">
+                    "Arsitektur terbaik lahir dari kejujuran pemakaian material dan kepatuhan mutlak terhadap pergerakan
+                    poros cahaya."
+                </blockquote>
+
+                <!-- Animated Stat Counters Grid -->
+                <div class="grid grid-cols-3 gap-6 pt-6 border-t border-zinc-200/60 dark:border-zinc-800">
+                    <div>
+                        <span class="block text-3xl font-['Playfair'] text-archGold font-bold counter-value"
+                            data-target="3">0</span>
+                        <span class="text-[11px] uppercase tracking-widest text-zinc-500 font-['Poppins']">Years
+                            Practice</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-['Playfair'] text-archGold font-bold counter-value"
+                            data-target="0">0</span>
+                        <span class="text-[11px] uppercase tracking-widest text-zinc-500 font-['Poppins']">Global
+                            Projects</span>
+                    </div>
+                    <div>
+                        <span class="block text-3xl font-['Playfair'] text-archGold font-bold counter-value"
+                            data-target="4">0</span>
+                        <span class="text-[11px] uppercase tracking-widest text-zinc-500 font-['Poppins']">Design
+                            Awards</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Services Capabilities Section -->
+    <section id="services" class="py-32 relative z-10 max-w-7xl mx-auto px-6">
+        <div class="text-center max-w-xl mx-auto mb-20" data-aos="fade-up">
+            <h2 class="text-3xl sm:text-5xl font-['Playfair'] font-light text-zinc-950 section-title">Artawastu
+                Architect Expertise</h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Service item 1 -->
+            <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white transition duration-500 space-y-6"
+                data-aos="fade-up" data-aos-delay="100">
+                <div class="text-archGold text-3xl"><i class="font-light fa-solid fa-compass-drafting"></i></div>
+                <h3 class="text-xl font-['Playfair'] font-medium text-zinc-950">Exterior Design</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed font-light">Perancangan struktur fasad luar ikonik,
+                    kombinasi massa bangunan premium, dan rekayasa geometri bangunan modern yang fungsional.</p>
+            </div>
+            <!-- Service item 2 -->
+            <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white transition duration-500 space-y-6"
+                data-aos="fade-up" data-aos-delay="200">
+                <div class="text-archGold text-3xl"><i class="fa-solid fa-couch"></i></div>
+                <h3 class="text-xl font-['Playfair'] font-medium text-zinc-950">Interior Architecture</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed font-light">Tata kelola ruang dalam mewah berkonsep
+                    minimalis, pemetaan partisi material masif, kustomisasi furnitur artistik terintegrasi.</p>
+            </div>
+            <!-- Service item 3 -->
+            <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white transition duration-500 space-y-6"
+                data-aos="fade-up" data-aos-delay="300">
+                <div class="text-archGold text-3xl"><i class="fa-solid fa-tree"></i></div>
+                <h3 class="text-xl font-['Playfair'] font-medium text-zinc-950">Landscape Design</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed font-light">Sinkronisasi taman luar bangunan, koridor
+                    elemen air mengalir alami, kontur vegetasi tropis penunjang kenyamanan iklim mikro.</p>
+            </div>
+            <!-- Service item 4 -->
+            <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white transition duration-500 space-y-6"
+                data-aos="fade-up" data-aos-delay="400">
+                <div class="text-archGold text-3xl"><i class="fa-solid fa-cubes"></i></div>
+                <h3 class="text-xl font-['Playfair'] font-medium text-zinc-950">3D Visualization</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed font-light">Pembuatan visualisasi render fotorealistis
+                    tiga dimensi premium resolusi ultra, animasi cinematic walkthrough spasial komparatif.</p>
+            </div>
+            <!-- Service item 5 -->
+            <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white transition duration-500 space-y-6"
+                data-aos="fade-up" data-aos-delay="500">
+                <div class="text-archGold text-3xl"><i class="fa-solid fa-house-laptop"></i></div>
+                <h3 class="text-xl font-['Playfair'] font-medium text-zinc-950">Smart Building Concept</h3>
+                <p class="text-zinc-500 text-xs leading-relaxed font-light">Otomatisasi sistem manajemen kelistrikan
+                    pintar terintegrasi, pemantauan konsumsi daya, tata lampu lux sensorik adaptif.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Architecture Gallery Section (Masonry Grid with Image Reveal) -->
+    <section id="gallery" class="py-32 relative z-10 bg-zinc-50 dark:bg-zinc-900/20 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-xl mx-auto mb-20" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-5xl font-['Playfair'] font-light text-zinc-950 section-title">
+                    ArtawastuStudio
+                    Gallery</h2>
+            </div>
+
+            <!-- Custom Clean Responsive Masonry Layout Matrix -->
+            <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6" id="masonry-container">
+                <div class="break-inside-avoid overflow-hidden shadow-sm group relative" data-aos="fade-up">
+                    <img src="img/8.png" alt="Gallery item"
+                        class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                </div>
+                <div class="break-inside-avoid overflow-hidden shadow-sm group relative" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <img src="img/1 PKL.png" alt="Gallery item"
+                        class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                </div>
+                <div class="break-inside-avoid overflow-hidden shadow-sm group relative" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <img src="img/4 PKL.png" alt="Gallery item"
+                        class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                </div>
+                <div class="break-inside-avoid overflow-hidden shadow-sm group relative" data-aos="fade-up">
+                    <img src="img/5 PKL.png" alt="Gallery item"
+                        class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                </div>
+                <div class="break-inside-avoid overflow-hidden shadow-sm group relative" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <img src="img/6 PKL.png" alt="Gallery item"
+                        class="w-full h-auto object-cover filter grayscale hover:grayscale-0 transition duration-700">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Awards & Achievements Section -->
+    <section id="awards"
+        class="py-32 relative z-10 border-t border-zinc-200/60 dark:border-zinc-800 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center max-w-xl mx-auto mb-20" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-5xl font-['Playfair'] font-light text-zinc-950 section-title">Architect's
+                    Achievement</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white dark:hover:bg-zinc-900 hover:shadow-2xl transition-all duration-500 flex flex-col justify-between min-h-[220px]"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div class="space-y-4">
+                        <span
+                            class="font-['Playfair'] text-archGold text-2xl font-bold block transition-transform duration-500 group-hover:translate-x-1">2025</span>
+                        <h4
+                            class="font-['Playfair'] font-medium text-lg text-zinc-950 dark:text-white transition-colors group-hover:text-archGold">
+                            Juara 1 - Design Building Competition</h4>
+                    </div>
+                    <p class="text-zinc-400 text-xs font-light pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                        Universitas Gadjah Mada</p>
+                </div>
+
+                <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white dark:hover:bg-zinc-900 hover:shadow-2xl transition-all duration-500 flex flex-col justify-between min-h-[220px]"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div class="space-y-4">
+                        <span
+                            class="font-['Playfair'] text-archGold text-2xl font-bold block transition-transform duration-500 group-hover:translate-x-1">2024</span>
+                        <h4
+                            class="font-['Playfair'] font-medium text-lg text-zinc-950 dark:text-white transition-colors group-hover:text-archGold">
+                            Juara 1 - Design Rumah Impian</h4>
+                    </div>
+                    <p class="text-zinc-400 text-xs font-light pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                        Universitas Muhammadiyah Malang - Provinsi</p>
+                </div>
+
+                <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white dark:hover:bg-zinc-900 hover:shadow-2xl transition-all duration-500 flex flex-col justify-between min-h-[220px]"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <div class="space-y-4">
+                        <span
+                            class="font-['Playfair'] text-archGold text-2xl font-bold block transition-transform duration-500 group-hover:translate-x-1">2024</span>
+                        <h4
+                            class="font-['Playfair'] font-medium text-lg text-zinc-950 dark:text-white transition-colors group-hover:text-archGold">
+                            Juara 2 - Lomba Design Maket</h4>
+                    </div>
+                    <p class="text-zinc-400 text-xs font-light pt-4 border-t border-zinc-100 dark:border-zinc-800">Dinas
+                        PUPR Kabupaten Ngawi</p>
+                </div>
+
+                <div class="p-8 border border-zinc-200/80 dark:border-zinc-800 bg-white/40 dark:bg-zinc-900/40 backdrop-blur-sm group hover:border-archGold hover:bg-white dark:hover:bg-zinc-900 hover:shadow-2xl transition-all duration-500 flex flex-col justify-between min-h-[220px]"
+                    data-aos="fade-up" data-aos-delay="400">
+                    <div class="space-y-4">
+                        <span
+                            class="font-['Playfair'] text-archGold text-2xl font-bold block transition-transform duration-500 group-hover:translate-x-1">2024</span>
+                        <h4
+                            class="font-['Playfair'] font-medium text-lg text-zinc-950 dark:text-white transition-colors group-hover:text-archGold">
+                            Nominator Pemuda Pelopor</h4>
+                    </div>
+                    <p class="text-zinc-400 text-xs font-light pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                        DISPARPORA Kabupaten Ngawi</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 8. Contact Section -->
+    <section id="contact" class="py-32 relative z-10 bg-zinc-950 text-white transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div class="text-center max-w-xl mx-auto mb-20" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-5xl font-['Playfair'] font-light text-white section-title">Let's Collaborate
+                </h2>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+
+                <div class="lg:col-span-6 space-y-10" data-aos="fade-right">
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-['Playfair'] font-light tracking-wide text-zinc-100">Studio &
+                            Professional Channels</h3>
+                        <p class="text-xs text-zinc-400 font-light leading-relaxed max-w-md">
+                            Silakan hubungi saya melalui jalur komunikasi di bawah ini untuk mendiskusikan konsep
+                            kompetisi, proyek arsitektur, rancangan maket, maupun kolaborasi profesional lainnya.
+                        </p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <a href="mailto:adityaaaja086@gmail.com"
+                            class="flex items-center space-x-4 p-4 border border-zinc-900 bg-zinc-900/40 hover:border-archGold/50 hover:bg-zinc-900 transition-all duration-300 group">
+                            <div
+                                class="text-archGold text-xl w-10 h-10 flex items-center justify-center bg-zinc-950 rounded-none">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span
+                                    class="block text-[10px] uppercase tracking-widest text-zinc-500 font-['Poppins']">Professional
+                                    Email</span>
+                                <span
+                                    class="text-xs text-zinc-300 font-light group-hover:text-white transition">studio@auraatmadja.com</span>
+                            </div>
+                        </a>
+
+                        <a href="https://wa.me/+6282229389969" target="_blank"
+                            class="flex items-center space-x-4 p-4 border border-zinc-900 bg-zinc-900/40 hover:border-emerald-500/50 hover:bg-zinc-900 transition-all duration-300 group">
+                            <div
+                                class="text-emerald-500 text-xl w-10 h-10 flex items-center justify-center bg-zinc-950 rounded-none">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <span
+                                    class="block text-[10px] uppercase tracking-widest text-zinc-500 font-['Poppins']">Direct
+                                    WhatsApp</span>
+                                <span class="text-xs text-zinc-300 font-light group-hover:text-white transition">+62 822-2938-9969</span>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="space-y-3">
+                        <span
+                            class="block text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-['Poppins'] font-medium">Follow
+                            Professional Network</span>
+                        <div class="flex gap-4">
+                            <a href="https://www.instagram.com/artawastu.studio?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                                class="w-10 h-10 flex items-center justify-center border border-zinc-800 text-zinc-400 hover:text-archGold hover:border-archGold transition-all duration-300"><i
+                                    class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6" data-aos="fade-left">
+                    <div class="w-full h-80 bg-zinc-900 overflow-hidden border border-zinc-800 p-2">
+                        <iframe
+                            class="w-full h-full grayscale opacity-40 filter border-none transition-all duration-700 hover:opacity-70 hover:grayscale-0"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126613.25464193582!2d111.36531388147253!3d-7.447065099882672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1m3!1s0x2e79e60fbba5645f%3A0x302775b6c3558f0!2sNgawi%2C%20Kec.%20Ngawi%2C%20Kabupaten%20Ngawi%2C%20Jawa%20Timur!5e0!3m2!1sid!2sid!4v1713000000000!5m2!1sid!2sid"
+                            allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Elegant Minimalist Footer -->
+    <footer
+        class="border-t border-zinc-200 dark:border-zinc-900 bg-archWhite dark:bg-zinc-950 py-8 relative z-10 transition-colors duration-500">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-zinc-400 font-light font-['Inter']">© 2026 <span
+                    class="font-medium text-zinc-700 dark:text-zinc-300">ArtawastuStudio</span>. All Rights Reserved.
+            </p>
+            <div class="flex space-x-6 text-zinc-400 text-sm">
+                <a href="#" class="hover:text-archGold transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-archGold transition"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="hover:text-archGold transition"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Popup Modal Infrastructure (Project Details Preview) -->
+    <div class="modal fade" id="projectDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div
+                class="modal-content rounded-none bg-white dark:bg-zinc-950 text-zinc-950 dark:text-white border border-zinc-800/20">
+                <div
+                    class="modal-header border-b border-zinc-100 dark:border-zinc-800 py-4 px-6 flex justify-between items-center">
+                    <h5 class="modal-title font-['Playfair'] text-xl font-semibold" id="modalProjectName">Project Title
+                    </h5>
+                    <button type="button"
+                        class="text-zinc-400 hover:text-zinc-950 dark:hover:text-white text-lg focus:outline-none"
+                        data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="modal-body p-6 space-y-6">
+                    <div class="w-full aspect-[16/9] overflow-hidden bg-zinc-100">
+                        <img src="img/coverimg.jpeg" id="modalProjectImage" class="w-full h-full object-cover"
+                            alt="Project Cover Image">
+                    </div>
+                    <div
+                        class="grid sm:grid-cols-3 gap-4 text-xs font-['Poppins'] border-b border-zinc-100 dark:border-zinc-800 pb-4">
+                        <div><span class="text-zinc-400 block uppercase tracking-wider">Location</span><strong
+                                id="modalProjectLocation" class="text-zinc-800 dark:text-zinc-200 font-medium">Location
+                                Info</strong></div>
+                        <div><span class="text-zinc-400 block uppercase tracking-wider">Year Completed</span><strong
+                                id="modalProjectYear" class="text-zinc-800 dark:text-zinc-200 font-medium">Year
+                                Info</strong></div>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-xs text-zinc-400 uppercase tracking-widest block font-['Poppins']">Design
+                            Concept</span>
+                        <p id="modalProjectConcept"
+                            class="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed font-light">Concept
+                            statement goes here...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Framework & Library Scripts Core -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <!-- Custom Engine Link -->
+    <script src="script.js"></script>
+</body>
+
+</html>
